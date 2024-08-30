@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.lai.seckillsystem.pojo")
+@MapperScan("com.lai.seckillsystem.mapper")
 public class SecKillSystemApplication {
 
 	public static void main(String[] args) {

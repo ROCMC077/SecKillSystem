@@ -1,8 +1,10 @@
 package com.lai.seckillsystem.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
