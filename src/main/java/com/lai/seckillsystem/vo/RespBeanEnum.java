@@ -17,9 +17,14 @@ public enum RespBeanEnum {
 	
 	//登入異常
 	LOGIN_NULL_ERROR(500210,"手機號碼或密碼為空"),
-	LOGIN_ERROR(500210,"手機號碼錯誤"),
-	LOGIN_PASS_ERROR(500210,"密碼錯誤"),
-	MOBILE_ERROR(500211,"手機號碼格式不正確");
+	MOBILE_ERROR(500211,"手機號碼格式不正確"),
+	LOGIN_ERROR(500212,"手機號碼錯誤"),
+	LOGIN_PASS_ERROR(500213,"密碼錯誤"),
+	BIND_ERROR(500214,"參數校驗異常"),
+	
+	//秒殺活動
+	EMPTY_STOCK(500500,"庫存不足"),
+	REPEAT_ERROR(500500,"商品每人限購一件");
 
 	
 	private final Integer code;
