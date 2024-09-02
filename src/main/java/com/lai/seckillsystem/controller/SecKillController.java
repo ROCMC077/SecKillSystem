@@ -37,7 +37,6 @@ public class SecKillController {
 		
 		//判斷庫存
 		GoodsVo goods = goodsService.findGoodsVoByGoodsId(goodsId);
-		System.err.println(goods);
 		if(goods.getStockCount()<1) {
 			model.addAttribute("errmsg",RespBeanEnum.EMPTY_STOCK.getMessage());
 			return "seckillFail";
@@ -49,7 +48,6 @@ public class SecKillController {
 			model.addAttribute("errmsg",RespBeanEnum.REPEAT_ERROR.getMessage());
 			return "seckillFail";
 		}
-		
 		
 		Order order = orderService.seckill(user,goods);
 		
