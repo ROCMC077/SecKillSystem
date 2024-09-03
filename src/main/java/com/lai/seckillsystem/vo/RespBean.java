@@ -2,11 +2,13 @@ package com.lai.seckillsystem.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 公共返回的對象
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class RespBean {
 	private long code;
@@ -34,6 +36,7 @@ public class RespBean {
 	public static RespBean error(RespBeanEnum respBeanEnum,Object object) {
 		return new RespBean(respBeanEnum.getCode(),respBeanEnum.getMessage(),object);
 	}
+	
 	
 	
 }

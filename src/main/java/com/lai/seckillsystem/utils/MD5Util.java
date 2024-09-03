@@ -1,4 +1,4 @@
-package utils;
+package com.lai.seckillsystem.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class MD5Util {
 	}
 	
 	//第一次加密 由前端輸入密碼到後端
-	public static String inputPassToFormPass(String inputPass) {
+	public static String inputPassToFromPass(String inputPass) {
 		String str = ""+salt.charAt(1)+salt.charAt(3)+salt.charAt(5)+inputPass+salt.charAt(0)+salt.charAt(2)+salt.charAt(4);
 		return md5(str);
 	}
@@ -25,13 +25,13 @@ public class MD5Util {
 	}
 	
 	public static String inputPassToDBPass(String inputPass,String salt) {
-		String formPass = inputPassToFormPass(inputPass);
+		String formPass = inputPassToFromPass(inputPass);
 		String dbPass = formPassToDBPass(formPass,salt);
 		return dbPass;
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(inputPassToFormPass("1234567890"));
+		System.out.println(inputPassToFromPass("1234567890"));
 		System.out.println(formPassToDBPass("89faa6ea1a79b8a28e1356ee8a8e3fd4",salt));
 		System.out.println(inputPassToDBPass("1234567890",salt));
 

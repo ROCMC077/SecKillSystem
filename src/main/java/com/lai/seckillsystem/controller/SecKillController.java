@@ -16,8 +16,6 @@ import com.lai.seckillsystem.service.ISeckillOrderService;
 import com.lai.seckillsystem.vo.GoodsVo;
 import com.lai.seckillsystem.vo.RespBeanEnum;
 
-import jakarta.annotation.PostConstruct;
-
 @Controller
 @RequestMapping("/seckill")
 public class SecKillController {

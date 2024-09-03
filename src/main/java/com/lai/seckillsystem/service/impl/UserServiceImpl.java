@@ -10,15 +10,15 @@ import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.exception.GlobalException;
 import com.lai.seckillsystem.mapper.UserMapper;
 import com.lai.seckillsystem.service.IUserService;
+import com.lai.seckillsystem.utils.CookieUtil;
+import com.lai.seckillsystem.utils.MD5Util;
+import com.lai.seckillsystem.utils.UUIDUtil;
 import com.lai.seckillsystem.vo.LoginVo;
 import com.lai.seckillsystem.vo.RespBean;
 import com.lai.seckillsystem.vo.RespBeanEnum;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import utils.CookieUtil;
-import utils.MD5Util;
-import utils.UUIDUtil;
 
 /**
  * <p>
@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		redisTemplate.opsForValue().set("user:"+ticket, user);
 		
 		CookieUtil.setCookie(request, response, "userTicket", ticket);
-		return RespBean.success();
+		return RespBean.success(ticket);
 	}
 
 	/**

@@ -1,11 +1,11 @@
 package com.lai.seckillsystem.vo;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.lai.seckillsystem.utils.ValidatorUtil;
 import com.lai.seckillsystem.validator.IsMobile;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import utils.ValidatorUtil;
 
 /**
  * 

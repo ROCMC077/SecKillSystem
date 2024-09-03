@@ -1,32 +1,68 @@
 package com.lai.seckillsystem.controller;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+import org.thymeleaf.web.IWebExchange;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.service.IGoodsService;
 import com.lai.seckillsystem.vo.GoodsVo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
 	@Autowired
 	private IGoodsService goodsService;
+	@Autowired
+	private RedisTemplate redisTemplate;
+	@Autowired
+	private ThymeleafViewResolver thymeleafViewResolver;
 
 	/**
 	 * 跳轉商品頁面
 	 */
-	@GetMapping("toList")
-	public String toList(Model model, User user) {
+	@GetMapping(value="/toList", produces = "text/html;charset=utf-8")
+	@ResponseBody
+	public String toList(Model model, User user,IWebExchange webExchange, HttpServletRequest request, HttpServletResponse response) {
+		ValueOperations valueOperations = redisTemplate.opsForValue();
+		String html = (String)valueOperations.get("goodsList");
+		//從 redis 獲取頁面
+		//如果不為空,直接返回 html
+		if(!StringUtils.isEmpty(html)) {
+			return html;
+		}
+		
 		model.addAttribute("user", user);
 		model.addAttribute("goodsList", goodsService.findGoodsVo());
-		return "goodsList";
+		
+		//從 redis 獲取頁面
+		//如果為空,手動渲染頁面,存入redis並返回
+		
+//	     WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
+	     Context webContext = new Context(request.getLocale(), model.asMap());
+		thymeleafViewResolver.getTemplateEngine().process("goodsList",webContext);
+		if(StringUtils.isEmpty(html)) {
+			valueOperations.set("goodList", html,60,TimeUnit.SECONDS);
+			return html;
+		}
+//		return "goodsList";
+		return null;
 	}
 	
 	/**

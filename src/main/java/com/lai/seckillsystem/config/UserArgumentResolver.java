@@ -11,10 +11,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.service.IUserService;
+import com.lai.seckillsystem.utils.CookieUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import utils.CookieUtil;
 
 /**
  * 自定義用戶參數

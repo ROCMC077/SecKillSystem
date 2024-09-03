@@ -1,4 +1,4 @@
-package utils;
+package com.lai.seckillsystem.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
