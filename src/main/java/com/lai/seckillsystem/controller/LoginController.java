@@ -1,5 +1,9 @@
 package com.lai.seckillsystem.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +13,6 @@ import com.lai.seckillsystem.service.IUserService;
 import com.lai.seckillsystem.vo.LoginVo;
 import com.lai.seckillsystem.vo.RespBean;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

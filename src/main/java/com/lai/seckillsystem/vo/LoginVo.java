@@ -1,10 +1,11 @@
 package com.lai.seckillsystem.vo;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.lai.seckillsystem.validator.IsMobile;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

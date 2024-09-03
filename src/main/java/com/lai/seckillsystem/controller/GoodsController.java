@@ -3,6 +3,9 @@ package com.lai.seckillsystem.controller;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -12,17 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.view.ThymeleafViewResolver;
-import org.thymeleaf.web.IWebExchange;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.service.IGoodsService;
 import com.lai.seckillsystem.vo.GoodsVo;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/goods")
@@ -39,12 +39,13 @@ public class GoodsController {
 	 */
 	@GetMapping(value="/toList", produces = "text/html;charset=utf-8")
 	@ResponseBody
-	public String toList(Model model, User user,IWebExchange webExchange, HttpServletRequest request, HttpServletResponse response) {
+	public String toList(Model model, User user, HttpServletRequest request, HttpServletResponse response) {
 		ValueOperations valueOperations = redisTemplate.opsForValue();
 		String html = (String)valueOperations.get("goodsList");
 		//從 redis 獲取頁面
 		//如果不為空,直接返回 html
 		if(!StringUtils.isEmpty(html)) {
+			System.out.println("redis get html");
 			return html;
 		}
 		
@@ -54,11 +55,10 @@ public class GoodsController {
 		//從 redis 獲取頁面
 		//如果為空,手動渲染頁面,存入redis並返回
 		
-//	     WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
-	     Context webContext = new Context(request.getLocale(), model.asMap());
-		thymeleafViewResolver.getTemplateEngine().process("goodsList",webContext);
-		if(StringUtils.isEmpty(html)) {
-			valueOperations.set("goodList", html,60,TimeUnit.SECONDS);
+	    WebContext context = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
+		html = thymeleafViewResolver.getTemplateEngine().process("goodsList",context);
+		if(!StringUtils.isEmpty(html)) {
+			valueOperations.set("goodsList", html,60,TimeUnit.SECONDS);
 			return html;
 		}
 //		return "goodsList";
@@ -68,8 +68,17 @@ public class GoodsController {
 	/**
 	 * 跳轉商品詳細頁面
 	 */
-	@GetMapping("toDetail/{goodsId}")
-	public String toDtail(@PathVariable Integer goodsId,Model model, User user) {
+	@GetMapping(value="/toDetail/{goodsId}", produces = "text/html;charset=utf-8")
+	@ResponseBody
+	public String toDtail(@PathVariable Integer goodsId,Model model, User user, HttpServletRequest request, HttpServletResponse response) {
+		ValueOperations valueOperations = redisTemplate.opsForValue();
+		String html = (String)valueOperations.get("goodsDetail:"+goodsId);
+		//從 redis 獲取頁面
+		//如果不為空,直接返回 html
+		if(!StringUtils.isEmpty(html)) {
+			System.out.println("redis get html");
+			return html;
+		}
 		model.addAttribute("user", user);
 		GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
 		Date startDate = goodsVo.getStartDate();
@@ -98,6 +107,17 @@ public class GoodsController {
 		model.addAttribute("remainSeconds", remainSeconds);
 		model.addAttribute("secKillStatus", secKillStatus);
 		model.addAttribute("goods", goodsVo);
-		return "goodsDetail";
+		
+		//從 redis 獲取頁面
+		//如果為空,手動渲染頁面,存入redis並返回
+				
+		WebContext context = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
+		html = thymeleafViewResolver.getTemplateEngine().process("goodsDetail",context);
+		if(!StringUtils.isEmpty(html)) {
+			valueOperations.set("goodsDetail:"+goodsId, html,60,TimeUnit.SECONDS);
+			return html;
+		}
+//		return "goodsDetail";
+		return null;
 	}
 }

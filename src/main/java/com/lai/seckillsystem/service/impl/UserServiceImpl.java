@@ -1,5 +1,8 @@
 package com.lai.seckillsystem.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,6 @@ import com.lai.seckillsystem.utils.UUIDUtil;
 import com.lai.seckillsystem.vo.LoginVo;
 import com.lai.seckillsystem.vo.RespBean;
 import com.lai.seckillsystem.vo.RespBeanEnum;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * <p>

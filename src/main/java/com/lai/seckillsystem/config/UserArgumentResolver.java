@@ -1,5 +1,8 @@
 package com.lai.seckillsystem.config;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -12,9 +15,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.service.IUserService;
 import com.lai.seckillsystem.utils.CookieUtil;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 自定義用戶參數
