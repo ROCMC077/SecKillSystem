@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lai.seckillsystem.entity.Order;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.vo.GoodsVo;
+import com.lai.seckillsystem.vo.OrderDetailVo;
 
 /**
  * <p>
@@ -20,5 +21,13 @@ public interface IOrderService extends IService<Order> {
 	 * @return
 	 */
 	Order seckill(User user, GoodsVo goods);
+
+	
+	/**
+	 * 訂單詳情
+	 * @param orderId
+	 * @return
+	 */
+	OrderDetailVo detail(Integer orderId);
 
 }

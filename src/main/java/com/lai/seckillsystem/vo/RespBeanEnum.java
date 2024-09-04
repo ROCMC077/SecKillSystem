@@ -21,10 +21,19 @@ public enum RespBeanEnum {
 	LOGIN_ERROR(500212,"手機號碼錯誤"),
 	LOGIN_PASS_ERROR(500213,"密碼錯誤"),
 	BIND_ERROR(500214,"參數校驗異常"),
+	SESSION_ERROR(500215,"用戶不存在"),
 	
 	//秒殺活動
 	EMPTY_STOCK(500500,"庫存不足"),
-	REPEAT_ERROR(500500,"商品每人限購一件");
+	REPEAT_ERROR(500501,"商品每人限購一件"),
+	
+	//會員
+	UPDATE_PASSWORD_FAIL(500502,"更新密碼失敗"),
+	
+	//訂單
+	ORDER_NOT_EXIST(500300,"訂單不存在");
+	
+	
 
 	
 	private final Integer code;

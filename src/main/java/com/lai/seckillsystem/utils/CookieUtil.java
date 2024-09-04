@@ -190,7 +190,7 @@ public class CookieUtil {
                     System.out.println("cookie.setDomain(" + domainName + ");");
                     cookie.setDomain(domainName);
                 }
-                System.out.println(domainName);
+//                System.out.println(domainName);
             }
             cookie.setPath("/");
             response.addCookie(cookie);
@@ -222,7 +222,7 @@ public class CookieUtil {
             }
             if (null != request) {// 設置域名的cookie
                 String domainName = getDomainName(request);
-                System.out.println(domainName);
+//                System.out.println(domainName);
                 if (!"localhost".equals(domainName)) {
                     cookie.setDomain(domainName);
                 }
