@@ -6,7 +6,7 @@
 * Ubuntu 20.04
 
 # 使用工具
-* eclipse
+* Eclipse
 * MySQL Workbench 8.0 CE
 * RedisDesktopManager
 * GitHub
