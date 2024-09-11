@@ -8,18 +8,22 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 消息發送者
+ * 
  * @author username
  */
 @Service
 @Slf4j
-public class MQSender {
-	
+public class SeckillMQSender {
+
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
-	public void send(Object msg) {
+	/**
+	 * 發送秒殺訊息
+	 * @param msg
+	 */
+	public void send(String msg) {
 		log.info("發送消息：" + msg);
-		rabbitTemplate.convertAndSend("queue", msg);
+		rabbitTemplate.convertAndSend("seckillExchange", "seckill.message", msg);
 	}
-
 }

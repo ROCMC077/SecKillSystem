@@ -1,14 +1,17 @@
 package com.lai.seckillsystem.service.impl;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lai.seckillsystem.entity.Order;
 import com.lai.seckillsystem.entity.SeckillGoods;
@@ -20,6 +23,8 @@ import com.lai.seckillsystem.service.IGoodsService;
 import com.lai.seckillsystem.service.IOrderService;
 import com.lai.seckillsystem.service.ISeckillGoodsService;
 import com.lai.seckillsystem.service.ISeckillOrderService;
+import com.lai.seckillsystem.utils.MD5Util;
+import com.lai.seckillsystem.utils.UUIDUtil;
 import com.lai.seckillsystem.vo.GoodsVo;
 import com.lai.seckillsystem.vo.OrderDetailVo;
 import com.lai.seckillsystem.vo.RespBeanEnum;
@@ -51,6 +56,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 	@Transactional
 	@Override
 	public Order seckill(User user, GoodsVo goods) {
+		ValueOperations valueOperations = redisTemplate.opsForValue();
+		
 		//秒殺商品表減庫存
 		SeckillGoods seckillGoods = seckillGoodsService.getOne(new QueryWrapper<SeckillGoods>().eq("goods_id", goods.getId()));
 		seckillGoods.setStockCount(seckillGoods.getStockCount()-1);
@@ -60,7 +67,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 						   .eq("goods_id",goods.getId())
 						   .gt("stock_count", 0));
 		//建立訂單
-		if(!result) {
+		if(seckillGoods.getStockCount()<1) {
+			//判斷庫存是否大於0
+			valueOperations.set("isStockEmpty:"+goods.getId(),"0");
 			return null;
 		}
 		Order order = new Order();
@@ -98,6 +107,32 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 		GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(order.getGoodsId());
 		OrderDetailVo detailVo = new OrderDetailVo(order,goodsVo);
 		return detailVo;
+	}
+
+	@Override
+	public String createPath(User user, Integer goodsId) {
+		String str = MD5Util.md5(UUIDUtil.uuid()+"123456");	
+		redisTemplate.opsForValue().set("seckillPath:"+user.getId()+":"+goodsId,str,60,TimeUnit.SECONDS);
+		return str;
+	}
+
+	
+	@Override
+	public boolean checkPath(User user, Integer goodsId, String path) {
+		if(null==user || goodsId<0 || StringUtils.isEmpty(path)) {
+			return false;
+		}
+		String redisPath = (String)redisTemplate.opsForValue().get("seckillPath:"+user.getId()+":"+goodsId);
+		return path.equals(redisPath);
+	}
+
+	@Override
+	public boolean checkCaptcha(User user, Integer goodsId, String captcha) {
+		if (StringUtils.isEmpty(captcha) ||user == null || goodsId < 0) {
+				return false;
+		}
+		String redisCaptcha = (String) redisTemplate.opsForValue().get("captcha:" + user.getId() +":"+goodsId);
+		return captcha.equals(redisCaptcha);
 	}
 
 }

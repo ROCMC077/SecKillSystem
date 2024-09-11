@@ -49,12 +49,12 @@
     </div>
 
     <div class="row">
+    	 <div class="col-md-5">
+            <button class="btn btn-primary btn-block" type="reset" onclick="reset()">清空</button>
+        </div>
         <div class="col-md-5">
             <!--login()是一個js腳本-->
             <button class="btn btn-primary btn-block" type="submit" onclick="login()">登錄</button>
-        </div>
-        <div class="col-md-5">
-            <button class="btn btn-primary btn-block" type="reset" onclick="register()">注冊</button>
         </div>
     </div>
 
@@ -115,9 +115,9 @@
         });
     }
 
-    /*登錄*/
-    function register() {
-        window.location.href = "/user/doRegister";
+    function reset() {
+    	$("#mobile").val("");
+    	$("#password").val("");
     }
 
 </script>

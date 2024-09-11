@@ -96,6 +96,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
+		<!-- captcha -->
+		<dependency>
+			<groupId>io.springboot.plugin</groupId>
+			<artifactId>captcha-spring-boot-starter</artifactId>
+			<version>2.2.3</version>
+		</dependency>
 		<!-- spring-session -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.springframework.session</groupId> -->

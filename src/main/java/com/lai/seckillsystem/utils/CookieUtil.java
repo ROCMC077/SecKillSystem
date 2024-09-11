@@ -243,19 +243,19 @@ public class CookieUtil {
     private static String getDomainName(HttpServletRequest request) {
         //region 原項目代碼
         // String domainName = null;
-        // // 通過request對象獲取訪問的url地址
+        // // 通過request對象獲取訪問的url網址
         // String serverName = request.getRequestURL().toString();
         // if (serverName == null || serverName.equals("")) {
         //     domainName = "";
         // } else {
         //     // 將url地下轉換為小寫
         //     serverName = serverName.toLowerCase();
-        //     // 如果url地址是以http://開頭  將http://截取
+        //     // 如果url網址是以http://開頭  將http://截取
         //     if (serverName.startsWith("http://")) {
         //         serverName = serverName.substring(7);
         //     }
         //     int end = serverName.length();
-        //     // 判斷url地址是否包含"/"
+        //     // 判斷url網址是否包含"/"
         //     if (serverName.contains("/")) {
         //         //得到第一個"/"出現的位置
         //         end = serverName.indexOf("/");

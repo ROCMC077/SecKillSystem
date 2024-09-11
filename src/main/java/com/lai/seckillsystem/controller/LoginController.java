@@ -13,11 +13,8 @@ import com.lai.seckillsystem.service.IUserService;
 import com.lai.seckillsystem.vo.LoginVo;
 import com.lai.seckillsystem.vo.RespBean;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
 @RequestMapping("/login")
-@Slf4j
 public class LoginController {
 	@Autowired
 	private IUserService userService;
@@ -30,7 +27,6 @@ public class LoginController {
 	@RequestMapping("/doLogin")
 	@ResponseBody
 	public RespBean doLogin(@Valid LoginVo loginVo,HttpServletRequest request,HttpServletResponse response) {
-//		log.info("{}",loginVo);
 		return userService.doLogin(loginVo,request,response);
 	}
 	

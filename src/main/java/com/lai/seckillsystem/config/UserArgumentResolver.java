@@ -1,8 +1,5 @@
 package com.lai.seckillsystem.config;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -11,10 +8,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lai.seckillsystem.entity.User;
 import com.lai.seckillsystem.service.IUserService;
-import com.lai.seckillsystem.utils.CookieUtil;
 
 /**
  * 自定義用戶參數
@@ -34,15 +29,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
-		HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-		HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
-
-		String ticket = CookieUtil.getCookieValue(request, "userTicket");
-		if (StringUtils.isEmpty(ticket)) {
-			return null;
-		}
+		return UserContext.getUser();
 		
-		return userService.getUserByCookie(ticket, request, response);
 	}
 
 }

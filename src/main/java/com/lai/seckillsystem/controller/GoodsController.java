@@ -69,61 +69,6 @@ public class GoodsController {
 	/**
 	 * 跳轉商品詳細頁面
 	 */
-//	@GetMapping(value="/toDetail2/{goodsId}", produces = "text/html;charset=utf-8")
-//	@ResponseBody
-//	public String toDtail2(@PathVariable Integer goodsId,Model model, User user, HttpServletRequest request, HttpServletResponse response) {
-//		ValueOperations valueOperations = redisTemplate.opsForValue();
-//		String html = (String)valueOperations.get("goodsDetail:"+goodsId);
-//		//從 redis 獲取頁面
-//		//如果不為空,直接返回 html
-//		if(!StringUtils.isEmpty(html)) {
-//			System.out.println("redis get html");
-//			return html;
-//		}
-//		model.addAttribute("user", user);
-//		GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
-//		Date startDate = goodsVo.getStartDate();
-//		Date endDate = goodsVo.getEndDate();
-//		Date nowDate = new Date();
-//		
-//		//秒殺活動狀態默認為0
-//		int secKillStatus = 0;
-//		//秒殺到數計時
-//		int remainSeconds = 0;
-//		
-//		if(nowDate.before(startDate)) {
-//			//秒殺活動未開始
-//			remainSeconds = (int)((startDate.getTime() - nowDate.getTime())/1000);
-//			
-//		}else if (nowDate.after(endDate)) {
-//			//秒殺活動已結束
-//			secKillStatus = 2;
-//			remainSeconds = -1;
-//		}else {
-//			//秒殺活動進行中
-//			secKillStatus = 1;
-//			remainSeconds = 0;
-//		}
-//
-//		model.addAttribute("remainSeconds", remainSeconds);
-//		model.addAttribute("secKillStatus", secKillStatus);
-//		model.addAttribute("goods", goodsVo);
-//		
-//		//從 redis 獲取頁面
-//		//如果為空,手動渲染頁面,存入redis並返回
-//				
-//		WebContext context = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
-//		html = thymeleafViewResolver.getTemplateEngine().process("goodsDetail",context);
-//		if(!StringUtils.isEmpty(html)) {
-//			valueOperations.set("goodsDetail:"+goodsId, html,60,TimeUnit.SECONDS);
-//			return html;
-//		}
-//		return null;
-//	}
-	
-	/**
-	 * 跳轉商品詳細頁面
-	 */
 	@GetMapping("/detail/{goodsId}")
 	@ResponseBody
 	public RespBean toDtail(@PathVariable Integer goodsId,Model model, User user) {

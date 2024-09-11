@@ -44,14 +44,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		String mobile = loginVo.getMobile();
 		String password = loginVo.getPassword();
 
-		// 參數效驗 因為 loginVo 有加上自定義的 annotation(@IsMobile)所以下面的可以不用了
-//		if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
-//			return RespBean.error(RespBeanEnum.LOGIN_NULL_ERROR);
-//		}
-//		if(!ValidatorUtil.isMobile(mobile)) {
-//			return RespBean.error(RespBeanEnum.MOBILE_ERROR);
-//		}
-
 		// 根據手機號碼或取用戶
 		User user = userMapper.selectById(mobile);
 		if (null == user) {
@@ -65,7 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 		// 生成Cookie
 		String ticket = UUIDUtil.uuid(); 
-//		request.getSession().setAttribute(ticket, user); 如果有spring-session-data-redis, 這行會自動存到redis session裡面,就不需要下面那幾段
 		
 		//將用戶資料存入redis
 		redisTemplate.opsForValue().set("user:"+ticket, user);

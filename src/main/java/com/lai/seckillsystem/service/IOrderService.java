@@ -29,5 +29,29 @@ public interface IOrderService extends IService<Order> {
 	 * @return
 	 */
 	OrderDetailVo detail(Integer orderId);
+	
+
+	/**
+	 * 獲取秒殺網址
+	 */
+	String createPath(User user, Integer goodsId);
+
+	/**
+	 * 校驗秒殺網址
+	 * @param user
+	 * @param goodsId
+	 * @param path 
+	 * @return
+	 */
+	boolean checkPath(User user, Integer goodsId, String path);
+
+	/**
+	 * 校驗驗證碼
+	 * @param user
+	 * @param goodsId
+	 * @param path 
+	 * @return
+	 */
+	boolean checkCaptcha(User user, Integer goodsId, String captcha);
 
 }

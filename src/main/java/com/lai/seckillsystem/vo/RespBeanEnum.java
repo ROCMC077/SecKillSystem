@@ -26,9 +26,12 @@ public enum RespBeanEnum {
 	//秒殺活動
 	EMPTY_STOCK(500500,"庫存不足"),
 	REPEAT_ERROR(500501,"商品每人限購一件"),
+	REQUEST_ILLEGAL(500502,"非法請求"),
+	ERROR_CAPTCHA(500503,"驗證碼錯誤"),
+	ACCESS_LITMIT(500504,"訪問過於頻繁"),
 	
 	//會員
-	UPDATE_PASSWORD_FAIL(500502,"更新密碼失敗"),
+	UPDATE_PASSWORD_FAIL(500600,"更新密碼失敗"),
 	
 	//訂單
 	ORDER_NOT_EXIST(500300,"訂單不存在");
