@@ -47,3 +47,7 @@
     <td>2.7.9</td>
   </tr>
 </table>
+
+# 系統架構
+![系統架構圖](https://drive.google.com/uc?export=view&id=1nUDadf7ckw-Z6Ab39gmO3RofzKJCytwN)
+
